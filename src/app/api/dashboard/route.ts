@@ -1,0 +1,26 @@
+import { NextResponse } from 'next/server'
+import { createServerClient } from '@/lib/supabase/server'
+import { startOfMonth } from 'date-fns'
+
+export async function GET() {
+  const supabase = createServerClient()
+  const monthStart = startOfMonth(new Date()).toISOString().split('T')[0]
+
+  const [patients, pendingInvoices, paidThisMonth, recentPatients] = await Promise.all([
+    supabase.from('patients').select('id', { count: 'exact', head: true }),
+    supabase.from('invoices').select('id', { count: 'exact', head: true }).in('status', ['draft', 'sent']),
+    supabase.from('invoices').select('grand_total_cents').eq('status', 'paid').gte('invoice_date', monthStart),
+    supabase.from('patients').select('id, client_name, baby_name, baby_dob, created_at').order('created_at', { ascending: false }).limit(5),
+  ])
+
+  const monthRevenue = (paidThisMonth.data || []).reduce(
+    (sum, inv) => sum + (inv.grand_total_cents || 0), 0
+  )
+
+  return NextResponse.json({
+    totalPatients: patients.count || 0,
+    pendingInvoices: pendingInvoices.count || 0,
+    monthRevenueCents: monthRevenue,
+    recentPatients: recentPatients.data || [],
+  })
+}
