@@ -1,5 +1,5 @@
 import { NextRequest, NextResponse } from 'next/server'
-import { extractPatientFields } from '@/lib/ocr/fieldExtractor'
+import { extractAllFields } from '@/lib/ocr/fieldExtractor'
 
 export async function POST(req: NextRequest) {
   const apiKey = process.env.GOOGLE_CLOUD_VISION_API_KEY
@@ -35,7 +35,7 @@ export async function POST(req: NextRequest) {
               mimeType: 'application/pdf',
             },
             features: [{ type: 'DOCUMENT_TEXT_DETECTION' }],
-            pages: [1],
+            pages: [1, 2, 3, 4, 5],
           }],
         }),
       }
@@ -47,11 +47,14 @@ export async function POST(req: NextRequest) {
     }
 
     const visionData = await visionRes.json()
-    const rawText =
-      visionData.responses?.[0]?.responses?.[0]?.fullTextAnnotation?.text || ''
-    const parsedFields = extractPatientFields(rawText)
+    const pageResponses: Array<{ fullTextAnnotation?: { text?: string } }> =
+      visionData.responses?.[0]?.responses ?? []
+    const rawText = pageResponses
+      .map((p, i) => `--- PAGE ${i + 1} ---\n${p.fullTextAnnotation?.text ?? ''}`)
+      .join('\n')
+    const extracted = extractAllFields(rawText)
 
-    return NextResponse.json({ rawText, parsedFields })
+    return NextResponse.json({ rawText, ...extracted })
   } else {
     // Image file (jpg, png, etc.)
     imageBase64 = buffer.toString('base64')
@@ -77,8 +80,8 @@ export async function POST(req: NextRequest) {
 
     const visionData = await visionRes.json()
     const rawText = visionData.responses?.[0]?.fullTextAnnotation?.text || ''
-    const parsedFields = extractPatientFields(rawText)
+    const extracted = extractAllFields(rawText)
 
-    return NextResponse.json({ rawText, parsedFields })
+    return NextResponse.json({ rawText, ...extracted })
   }
 }

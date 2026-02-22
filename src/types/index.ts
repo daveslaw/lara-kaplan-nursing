@@ -223,3 +223,30 @@ export type InvoiceVaccineLineForm = {
   quantity: number
   vaccination_record_id?: string
 }
+
+// ============================================================
+// OCR result types
+// ============================================================
+
+export type OcrGrowthEntry = {
+  measurement_date: string
+  age_label: string          // e.g. "6 weeks", "3 months"
+  weight_grams: number | null
+  length_cm: number | null
+  head_circumference_cm: number | null
+  notes: string
+}
+
+export type OcrVaccination = {
+  vaccine_name: string
+  age_group_label: string    // e.g. "Birth", "6 weeks"
+  administered_date: string
+  batch_number: string
+  site: string
+}
+
+export type OcrExtractedData = {
+  patientFields: Partial<PatientFormData>
+  growthEntries: OcrGrowthEntry[]
+  vaccinations: OcrVaccination[]
+}
