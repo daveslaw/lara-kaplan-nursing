@@ -87,9 +87,12 @@ export default function InvoicesPage() {
           <table className="w-full text-sm">
             <thead>
               <tr className="bg-muted/40 border-b border-border">
-                {['Invoice #', 'Patient', 'Date', 'Total', 'Status', 'Actions'].map(h => (
-                  <th key={h} className="px-5 py-3 text-left text-xs font-medium text-muted-foreground">{h}</th>
-                ))}
+                <th className="px-5 py-3 text-left text-xs font-medium text-muted-foreground">Invoice #</th>
+                <th className="px-5 py-3 text-left text-xs font-medium text-muted-foreground">Patient</th>
+                <th className="px-5 py-3 text-left text-xs font-medium text-muted-foreground">Date</th>
+                <th className="px-5 py-3 text-left text-xs font-medium text-muted-foreground hidden sm:table-cell">Total</th>
+                <th className="px-5 py-3 text-left text-xs font-medium text-muted-foreground hidden sm:table-cell">Status</th>
+                <th className="px-5 py-3 text-left text-xs font-medium text-muted-foreground hidden sm:table-cell">Actions</th>
               </tr>
             </thead>
             <tbody className="divide-y divide-border">
@@ -102,11 +105,11 @@ export default function InvoicesPage() {
                   </td>
                   <td className="px-5 py-3 text-muted-foreground">{inv.patient_name}</td>
                   <td className="px-5 py-3 text-muted-foreground">{formatDate(inv.invoice_date)}</td>
-                  <td className="px-5 py-3 font-semibold">{formatZAR(inv.grand_total_cents)}</td>
-                  <td className="px-5 py-3">
+                  <td className="px-5 py-3 font-semibold hidden sm:table-cell">{formatZAR(inv.grand_total_cents)}</td>
+                  <td className="px-5 py-3 hidden sm:table-cell">
                     <Badge className={`text-xs ${statusColors[inv.status]}`}>{inv.status}</Badge>
                   </td>
-                  <td className="px-5 py-3">
+                  <td className="px-5 py-3 hidden sm:table-cell">
                     <div className="flex gap-1">
                       {inv.status === 'draft' && (
                         <button onClick={() => updateStatus(inv.id, 'sent')}

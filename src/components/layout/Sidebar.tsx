@@ -27,17 +27,20 @@ export function Sidebar() {
 
   return (
     <>
-      {/* Mobile hamburger button — only visible when sidebar is closed */}
-      {!isOpen && (
+      {/* Mobile top bar — full-width header on small screens */}
+      <div
+        className="fixed top-0 left-0 right-0 z-40 md:hidden flex items-center px-4 h-14"
+        style={{ background: '#0f4c5c' }}
+      >
         <button
-          className="fixed top-4 left-4 z-40 md:hidden p-2 rounded-lg text-white"
-          style={{ background: '#0f4c5c' }}
           onClick={() => setIsOpen(true)}
+          className="text-white p-1 -ml-1"
           aria-label="Open menu"
         >
           <Menu className="w-5 h-5" />
         </button>
-      )}
+        <span className="ml-3 text-white font-semibold text-sm">Lara Kaplan</span>
+      </div>
 
       {/* Backdrop — mobile only */}
       {isOpen && (
