@@ -106,7 +106,7 @@ export default function PatientProfilePage({ params }: { params: Promise<{ id: s
 
         {/* OVERVIEW */}
         <TabsContent value="overview" className="space-y-4">
-          <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
+          <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
             {/* Client details */}
             <Card>
               <CardHeader className="pb-2">

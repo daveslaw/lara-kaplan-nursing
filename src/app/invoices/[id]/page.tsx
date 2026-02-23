@@ -133,6 +133,7 @@ export default function InvoiceDetailPage({ params }: { params: Promise<{ id: st
               <CardTitle className="text-xs uppercase tracking-wide text-muted-foreground">Services</CardTitle>
             </CardHeader>
             <CardContent className="p-0">
+              <div className="overflow-x-auto">
               <table className="w-full text-sm">
                 <thead><tr className="border-b border-border">
                   {['Date', 'Description', 'ICD-10', 'Code', 'Total'].map(h => (
@@ -151,6 +152,7 @@ export default function InvoiceDetailPage({ params }: { params: Promise<{ id: st
                   ))}
                 </tbody>
               </table>
+              </div>
             </CardContent>
           </Card>
         )}
@@ -162,6 +164,7 @@ export default function InvoiceDetailPage({ params }: { params: Promise<{ id: st
               <CardTitle className="text-xs uppercase tracking-wide text-muted-foreground">Vaccines</CardTitle>
             </CardHeader>
             <CardContent className="p-0">
+              <div className="overflow-x-auto">
               <table className="w-full text-sm">
                 <thead><tr className="border-b border-border">
                   {['Date', 'Code', 'Vaccine', 'ICD-10', 'NAPPI', 'Amount'].map(h => (
@@ -181,6 +184,7 @@ export default function InvoiceDetailPage({ params }: { params: Promise<{ id: st
                   ))}
                 </tbody>
               </table>
+              </div>
             </CardContent>
           </Card>
         )}

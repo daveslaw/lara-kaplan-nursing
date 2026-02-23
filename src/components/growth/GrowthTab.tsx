@@ -170,6 +170,7 @@ export function GrowthTab({ patientId }: GrowthTabProps) {
           ) : !entries.length ? (
             <div className="p-6 text-sm text-muted-foreground text-center">No measurements recorded yet.</div>
           ) : (
+            <div className="overflow-x-auto">
             <table className="w-full text-sm">
               <thead>
                 <tr className="bg-muted/40 border-b border-border">
@@ -198,6 +199,7 @@ export function GrowthTab({ patientId }: GrowthTabProps) {
                 ))}
               </tbody>
             </table>
+            </div>
           )}
         </CardContent>
       </Card>

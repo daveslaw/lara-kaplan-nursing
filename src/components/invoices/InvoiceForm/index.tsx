@@ -270,12 +270,12 @@ export function InvoiceBuilder({ preselectedPatientId }: InvoiceBuilderProps) {
           ) : (
             <div className="space-y-2">
               {serviceLines.map((line, i) => (
-                <div key={i} className="grid grid-cols-12 gap-2 items-end">
-                  <div className="col-span-2 space-y-1">
+                <div key={i} className="grid grid-cols-1 sm:grid-cols-12 gap-2 items-end">
+                  <div className="sm:col-span-2 space-y-1">
                     <Label className="text-xs">Date</Label>
                     <Input type="date" value={line.service_date} onChange={e => updateServiceLine(i, 'service_date', e.target.value)} />
                   </div>
-                  <div className="col-span-3 space-y-1">
+                  <div className="sm:col-span-3 space-y-1">
                     <Label className="text-xs">Code</Label>
                     <Select value={line.procedure_code} onValueChange={v => updateServiceLine(i, 'procedure_code', v)}>
                       <SelectTrigger className="text-xs h-9">
@@ -290,19 +290,19 @@ export function InvoiceBuilder({ preselectedPatientId }: InvoiceBuilderProps) {
                       </SelectContent>
                     </Select>
                   </div>
-                  <div className="col-span-3 space-y-1">
+                  <div className="sm:col-span-3 space-y-1">
                     <Label className="text-xs">Description</Label>
                     <Input value={line.description} onChange={e => updateServiceLine(i, 'description', e.target.value)} className="text-xs h-9" />
                   </div>
-                  <div className="col-span-2 space-y-1">
+                  <div className="sm:col-span-2 space-y-1">
                     <Label className="text-xs">ICD-10</Label>
                     <Input value={line.icd10_code} onChange={e => updateServiceLine(i, 'icd10_code', e.target.value)} className="text-xs h-9" placeholder="Z00.1" />
                   </div>
-                  <div className="col-span-1 space-y-1">
+                  <div className="sm:col-span-1 space-y-1">
                     <Label className="text-xs">Price</Label>
                     <p className="text-xs font-medium h-9 flex items-center">{formatZAR(line.unit_price_cents)}</p>
                   </div>
-                  <div className="col-span-1 flex justify-end pb-0.5">
+                  <div className="sm:col-span-1 flex justify-end pb-0.5">
                     <button onClick={() => setServiceLines(prev => prev.filter((_, j) => j !== i))}
                       className="text-muted-foreground hover:text-destructive transition-colors">
                       <Trash2 className="w-4 h-4" />
@@ -329,12 +329,12 @@ export function InvoiceBuilder({ preselectedPatientId }: InvoiceBuilderProps) {
           ) : (
             <div className="space-y-2">
               {vaccineLines.map((line, i) => (
-                <div key={i} className="grid grid-cols-12 gap-2 items-end">
-                  <div className="col-span-2 space-y-1">
+                <div key={i} className="grid grid-cols-1 sm:grid-cols-12 gap-2 items-end">
+                  <div className="sm:col-span-2 space-y-1">
                     <Label className="text-xs">Date</Label>
                     <Input type="date" value={line.vaccine_date} onChange={e => updateVaccineLine(i, 'vaccine_date', e.target.value)} />
                   </div>
-                  <div className="col-span-3 space-y-1">
+                  <div className="sm:col-span-3 space-y-1">
                     <Label className="text-xs">Vaccine</Label>
                     <Select value={line.vaccine_name} onValueChange={v => updateVaccineLine(i, 'vaccine_name', v)}>
                       <SelectTrigger className="text-xs h-9"><SelectValue /></SelectTrigger>
@@ -343,15 +343,15 @@ export function InvoiceBuilder({ preselectedPatientId }: InvoiceBuilderProps) {
                       </SelectContent>
                     </Select>
                   </div>
-                  <div className="col-span-2 space-y-1">
+                  <div className="sm:col-span-2 space-y-1">
                     <Label className="text-xs">ICD-10</Label>
                     <Input value={line.icd10_code} onChange={e => updateVaccineLine(i, 'icd10_code', e.target.value)} className="text-xs h-9" />
                   </div>
-                  <div className="col-span-2 space-y-1">
+                  <div className="sm:col-span-2 space-y-1">
                     <Label className="text-xs">NAPPI</Label>
                     <Input value={line.nappi_code} onChange={e => updateVaccineLine(i, 'nappi_code', e.target.value)} className="text-xs h-9" />
                   </div>
-                  <div className="col-span-2 space-y-1">
+                  <div className="sm:col-span-2 space-y-1">
                     <Label className="text-xs">Price (R)</Label>
                     <Input
                       type="number"
@@ -360,7 +360,7 @@ export function InvoiceBuilder({ preselectedPatientId }: InvoiceBuilderProps) {
                       className="text-xs h-9"
                     />
                   </div>
-                  <div className="col-span-1 flex justify-end pb-0.5">
+                  <div className="sm:col-span-1 flex justify-end pb-0.5">
                     <button onClick={() => setVaccineLines(prev => prev.filter((_, j) => j !== i))}
                       className="text-muted-foreground hover:text-destructive transition-colors">
                       <Trash2 className="w-4 h-4" />

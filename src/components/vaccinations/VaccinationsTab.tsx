@@ -206,6 +206,7 @@ export function VaccinationsTab({ patientId }: { patientId: string }) {
                 </CardTitle>
               </CardHeader>
               <CardContent className="p-0">
+                <div className="overflow-x-auto">
                 <table className="w-full text-xs">
                   <thead>
                     <tr className="border-b border-border">
@@ -231,6 +232,7 @@ export function VaccinationsTab({ patientId }: { patientId: string }) {
                     ))}
                   </tbody>
                 </table>
+                </div>
               </CardContent>
             </Card>
           ))}

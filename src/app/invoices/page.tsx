@@ -83,6 +83,7 @@ export default function InvoicesPage() {
         </Card>
       ) : (
         <Card className="overflow-hidden">
+          <div className="overflow-x-auto">
           <table className="w-full text-sm">
             <thead>
               <tr className="bg-muted/40 border-b border-border">
@@ -121,6 +122,7 @@ export default function InvoicesPage() {
               ))}
             </tbody>
           </table>
+          </div>
         </Card>
       )}
     </div>
