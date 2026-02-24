@@ -1,5 +1,10 @@
 import { NextRequest, NextResponse } from 'next/server'
+import { z } from 'zod'
 import { createAdminClient } from '@/lib/supabase/admin'
+
+const CreatePatientSchema = z.object({
+  client_name: z.string().min(1, 'client_name is required'),
+})
 
 export async function GET(req: NextRequest) {
   const supabase = createAdminClient()
@@ -29,6 +34,11 @@ export async function GET(req: NextRequest) {
 export async function POST(req: NextRequest) {
   const supabase = createAdminClient()
   const body = await req.json()
+
+  const parsed = CreatePatientSchema.safeParse(body)
+  if (!parsed.success) {
+    return NextResponse.json({ error: parsed.error.flatten() }, { status: 400 })
+  }
 
   const { data, error } = await supabase
     .from('patients')

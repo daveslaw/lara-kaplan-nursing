@@ -83,9 +83,12 @@ export function PatientForm({ defaultValues, onSubmit, isLoading, patient }: Pat
       <Section title="Client & Baby Details">
         <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
           <Field label="Mom / Client Name" required>
-            <Input {...register('client_name', { required: true })}
+            <Input {...register('client_name', { required: 'Client name is required' })}
               placeholder="e.g. Jane Smith"
               className={errors.client_name ? 'border-destructive' : ''} />
+            {errors.client_name && (
+              <p className="text-xs text-destructive mt-1">{errors.client_name.message}</p>
+            )}
           </Field>
           <Field label="Client ID Number">
             <Input {...register('client_id_number')} placeholder="13-digit SA ID" />
@@ -210,7 +213,7 @@ export function PatientForm({ defaultValues, onSubmit, isLoading, patient }: Pat
       </Section>
 
       <div className="flex justify-end gap-3 pt-2">
-        <Button type="submit" disabled={isLoading} style={{ background: '#0f4c5c' }}>
+        <Button type="submit" disabled={isLoading}>
           {isLoading ? 'Saving…' : 'Save Patient'}
         </Button>
       </div>

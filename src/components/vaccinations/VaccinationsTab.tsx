@@ -112,7 +112,7 @@ export function VaccinationsTab({ patientId }: { patientId: string }) {
         <h3 className="text-sm font-semibold">Vaccination Records</h3>
         <Dialog open={open} onOpenChange={setOpen}>
           <DialogTrigger asChild>
-            <Button size="sm" style={{ background: '#0f4c5c' }}>
+            <Button size="sm">
               <Plus className="w-4 h-4 mr-1" /> Record Vaccine
             </Button>
           </DialogTrigger>
@@ -185,7 +185,7 @@ export function VaccinationsTab({ patientId }: { patientId: string }) {
                 </div>
               </div>
 
-              <Button type="submit" disabled={saving} className="w-full" style={{ background: '#0f4c5c' }}>
+              <Button type="submit" disabled={saving} className="w-full">
                 {saving ? 'Saving…' : 'Record Vaccination'}
               </Button>
             </form>
@@ -211,7 +211,7 @@ export function VaccinationsTab({ patientId }: { patientId: string }) {
                   <thead>
                     <tr className="border-b border-border">
                       {['Vaccine', 'Date', 'Batch', 'Expiry', 'Site', ''].map(h => (
-                        <th key={h} className="px-4 py-2 text-left font-medium text-muted-foreground">{h}</th>
+                        <th key={h} scope="col" className="px-4 py-2 text-left font-medium text-muted-foreground">{h}</th>
                       ))}
                     </tr>
                   </thead>

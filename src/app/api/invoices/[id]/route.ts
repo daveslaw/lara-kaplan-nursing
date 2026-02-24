@@ -11,7 +11,10 @@ export async function GET(_req: NextRequest, { params }: { params: Promise<{ id:
     supabase.from('invoice_vaccine_lines').select('*').eq('invoice_id', id).order('sort_order'),
   ])
 
-  if (invoiceRes.error) return NextResponse.json({ error: invoiceRes.error.message }, { status: 404 })
+  if (invoiceRes.error) {
+    const status = invoiceRes.error.code === 'PGRST116' ? 404 : 500
+    return NextResponse.json({ error: invoiceRes.error.message }, { status })
+  }
 
   return NextResponse.json({
     invoice: {

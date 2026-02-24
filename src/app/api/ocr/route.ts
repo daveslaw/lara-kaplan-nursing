@@ -14,6 +14,19 @@ export async function POST(req: NextRequest) {
     return NextResponse.json({ error: 'No file uploaded' }, { status: 400 })
   }
 
+  const MAX_SIZE = 10 * 1024 * 1024 // 10MB
+  const ALLOWED_TYPES = ['application/pdf', 'image/jpeg', 'image/png', 'image/webp']
+
+  if (file.size > MAX_SIZE) {
+    return NextResponse.json({ error: 'File too large. Maximum size is 10MB.' }, { status: 400 })
+  }
+  if (!ALLOWED_TYPES.includes(file.type)) {
+    return NextResponse.json(
+      { error: 'Unsupported file type. Please upload a PDF, JPG, PNG, or WebP.' },
+      { status: 400 }
+    )
+  }
+
   const bytes = await file.arrayBuffer()
   const buffer = Buffer.from(bytes)
 

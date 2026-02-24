@@ -1,5 +1,11 @@
 import { NextRequest, NextResponse } from 'next/server'
+import { z } from 'zod'
 import { createAdminClient } from '@/lib/supabase/admin'
+
+const CreateInvoiceSchema = z.object({
+  patient_id: z.string().uuid('patient_id must be a valid UUID'),
+  invoice_date: z.string().min(1, 'invoice_date is required'),
+})
 
 export async function GET(req: NextRequest) {
   const supabase = createAdminClient()
@@ -25,6 +31,12 @@ export async function GET(req: NextRequest) {
 export async function POST(req: NextRequest) {
   const supabase = createAdminClient()
   const body = await req.json()
+
+  const parsed = CreateInvoiceSchema.safeParse(body)
+  if (!parsed.success) {
+    return NextResponse.json({ error: parsed.error.flatten() }, { status: 400 })
+  }
+
   const { service_lines, vaccine_lines, ...invoiceData } = body
 
   // Insert invoice (trigger assigns invoice_number)

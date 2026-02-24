@@ -83,7 +83,7 @@ export function GrowthTab({ patientId }: GrowthTabProps) {
         <h3 className="text-sm font-semibold">Growth Monitoring</h3>
         <Dialog open={open} onOpenChange={setOpen}>
           <DialogTrigger asChild>
-            <Button size="sm" style={{ background: '#0f4c5c' }}>
+            <Button size="sm">
               <Plus className="w-4 h-4 mr-1" /> Add Measurement
             </Button>
           </DialogTrigger>
@@ -123,7 +123,7 @@ export function GrowthTab({ patientId }: GrowthTabProps) {
                   <Textarea {...register('notes')} rows={2} placeholder="Any observations…" />
                 </div>
               </div>
-              <Button type="submit" disabled={saving} className="w-full" style={{ background: '#0f4c5c' }}>
+              <Button type="submit" disabled={saving} className="w-full">
                 {saving ? 'Saving…' : 'Save Measurement'}
               </Button>
             </form>
@@ -175,7 +175,7 @@ export function GrowthTab({ patientId }: GrowthTabProps) {
               <thead>
                 <tr className="bg-muted/40 border-b border-border">
                   {['Date', 'Age', 'Weight', 'Length', 'HC', 'Notes', ''].map(h => (
-                    <th key={h} className="px-4 py-2.5 text-left text-xs font-medium text-muted-foreground">{h}</th>
+                    <th key={h} scope="col" className="px-4 py-2.5 text-left text-xs font-medium text-muted-foreground">{h}</th>
                   ))}
                 </tr>
               </thead>

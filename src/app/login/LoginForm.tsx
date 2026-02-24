@@ -66,8 +66,7 @@ export function LoginForm() {
         <button
           type="submit"
           disabled={isSubmitting}
-          className="w-full py-2.5 px-4 rounded-lg text-sm font-medium text-white transition-opacity disabled:opacity-60 mt-2"
-          style={{ background: '#0f4c5c' }}
+          className="w-full py-2.5 px-4 rounded-lg text-sm font-medium text-white transition-opacity disabled:opacity-60 mt-2 bg-teal-900 hover:bg-teal-700"
         >
           {isSubmitting ? 'Signing in…' : 'Sign in'}
         </button>

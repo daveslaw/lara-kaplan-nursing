@@ -7,10 +7,7 @@ export default function LoginPage() {
       <div className="w-full max-w-sm">
         {/* Logo / Brand */}
         <div className="flex flex-col items-center mb-8">
-          <div
-            className="w-12 h-12 rounded-full flex items-center justify-center mb-4"
-            style={{ background: '#0f4c5c' }}
-          >
+          <div className="w-12 h-12 rounded-full flex items-center justify-center mb-4 bg-teal-900">
             <Heart className="w-6 h-6 text-white" />
           </div>
           <h1 className="text-xl font-semibold text-gray-900">Lara Kaplan</h1>

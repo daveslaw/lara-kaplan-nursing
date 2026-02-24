@@ -1,5 +1,11 @@
 import { NextRequest, NextResponse } from 'next/server'
+import { z } from 'zod'
 import { createAdminClient } from '@/lib/supabase/admin'
+
+const CreateVaccinationSchema = z.object({
+  vaccine_name: z.string().min(1, 'vaccine_name is required'),
+  administered_date: z.string().min(1, 'administered_date is required'),
+})
 
 export async function GET(_req: NextRequest, { params }: { params: Promise<{ id: string }> }) {
   const supabase = createAdminClient()
@@ -19,6 +25,11 @@ export async function POST(req: NextRequest, { params }: { params: Promise<{ id:
   const supabase = createAdminClient()
   const { id } = await params
   const body = await req.json()
+
+  const parsed = CreateVaccinationSchema.safeParse(body)
+  if (!parsed.success) {
+    return NextResponse.json({ error: parsed.error.flatten() }, { status: 400 })
+  }
 
   const { data, error } = await supabase
     .from('vaccination_records')

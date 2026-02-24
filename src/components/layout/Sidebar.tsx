@@ -37,8 +37,7 @@ export function Sidebar() {
     <>
       {/* Mobile top bar — full-width header on small screens */}
       <div
-        className="fixed top-0 left-0 right-0 z-40 md:hidden flex items-center px-4 h-14"
-        style={{ background: '#0f4c5c' }}
+        className="fixed top-0 left-0 right-0 z-40 md:hidden flex items-center px-4 h-14 bg-teal-900"
       >
         <button
           onClick={() => setIsOpen(true)}
@@ -61,11 +60,10 @@ export function Sidebar() {
       {/* Sidebar panel */}
       <aside
         className={cn(
-          'fixed inset-y-0 left-0 z-50 w-60 flex flex-col transition-transform duration-200',
+          'fixed inset-y-0 left-0 z-50 w-60 flex flex-col transition-transform duration-200 bg-teal-900',
           'md:translate-x-0',
           isOpen ? 'translate-x-0' : '-translate-x-full'
         )}
-        style={{ background: '#0f4c5c' }}
       >
         {/* Logo */}
         <div className="flex items-center gap-3 px-5 py-5 border-b border-white/10">
@@ -111,7 +109,7 @@ export function Sidebar() {
 
         {/* Footer */}
         <div className="px-3 py-4 border-t border-white/10 space-y-3">
-          <p className="text-white/40 text-xs px-2">Practice No. 0648949</p>
+          <p className="text-white/40 text-xs px-2">Practice No. {process.env.NEXT_PUBLIC_PRACTICE_NUMBER ?? '0648949'}</p>
           <button
             onClick={handleSignOut}
             className="flex items-center gap-3 w-full px-3 py-2.5 rounded-lg text-sm font-medium text-white/70 hover:bg-white/10 hover:text-white transition-colors"

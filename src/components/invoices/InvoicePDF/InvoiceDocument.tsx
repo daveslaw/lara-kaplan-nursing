@@ -81,12 +81,12 @@ export function InvoiceDocument({ data }: { data: InvoicePDFData }) {
         {/* Header */}
         <View style={s.header}>
           <View>
-            <Text style={s.practiceName}>Lara Kaplan</Text>
+            <Text style={s.practiceName}>{process.env.NEXT_PUBLIC_PRACTICE_NAME ?? 'Lara Kaplan'}</Text>
             <Text style={s.practiceDetail}>Registered Nurse and Midwife</Text>
-            <Text style={s.practiceDetail}>Practice No. 0648949</Text>
-            <Text style={s.practiceDetail}>96 William Road, Norwood</Text>
-            <Text style={s.practiceDetail}>Tel: 082 412 9135</Text>
-            <Text style={s.practiceDetail}>sisterlarak@outlook.com</Text>
+            <Text style={s.practiceDetail}>Practice No. {process.env.NEXT_PUBLIC_PRACTICE_NUMBER ?? '0648949'}</Text>
+            <Text style={s.practiceDetail}>{process.env.NEXT_PUBLIC_PRACTICE_ADDRESS ?? '96 William Road, Norwood'}</Text>
+            <Text style={s.practiceDetail}>Tel: {process.env.NEXT_PUBLIC_PRACTICE_PHONE ?? '082 412 9135'}</Text>
+            <Text style={s.practiceDetail}>{process.env.NEXT_PUBLIC_PRACTICE_EMAIL ?? 'sisterlarak@outlook.com'}</Text>
           </View>
           <View>
             <Text style={s.invoiceTitle}>INVOICE</Text>
@@ -194,17 +194,17 @@ export function InvoiceDocument({ data }: { data: InvoicePDFData }) {
         {/* Banking */}
         <View style={s.bankingSection}>
           <Text style={s.bankingTitle}>Payment Details — EFT</Text>
-          <View style={s.bankRow}><Text style={s.bankLabel}>Account Name:</Text><Text style={s.bankValue}>Lara Kaplan Nursing</Text></View>
-          <View style={s.bankRow}><Text style={s.bankLabel}>Bank:</Text><Text style={s.bankValue}>FNB</Text></View>
-          <View style={s.bankRow}><Text style={s.bankLabel}>Account No.:</Text><Text style={s.bankValue}>62744358369</Text></View>
-          <View style={s.bankRow}><Text style={s.bankLabel}>Branch Code:</Text><Text style={s.bankValue}>250655</Text></View>
+          <View style={s.bankRow}><Text style={s.bankLabel}>Account Name:</Text><Text style={s.bankValue}>{process.env.NEXT_PUBLIC_BANK_ACCOUNT_NAME ?? 'Lara Kaplan Nursing'}</Text></View>
+          <View style={s.bankRow}><Text style={s.bankLabel}>Bank:</Text><Text style={s.bankValue}>{process.env.NEXT_PUBLIC_BANK_NAME ?? 'FNB'}</Text></View>
+          <View style={s.bankRow}><Text style={s.bankLabel}>Account No.:</Text><Text style={s.bankValue}>{process.env.NEXT_PUBLIC_BANK_ACCOUNT_NUMBER ?? '62744358369'}</Text></View>
+          <View style={s.bankRow}><Text style={s.bankLabel}>Branch Code:</Text><Text style={s.bankValue}>{process.env.NEXT_PUBLIC_BANK_BRANCH_CODE ?? '250655'}</Text></View>
           <View style={s.bankRow}><Text style={s.bankLabel}>Reference:</Text><Text style={s.bankValue}>{data.invoiceNumber} / {data.patientName}</Text></View>
         </View>
 
         {/* Footer */}
         <View style={s.footer} fixed>
           <Text style={s.footerText}>
-            Lara Kaplan, Registered Nurse and Midwife · Practice No. 0648949 · 082 412 9135 · sisterlarak@outlook.com
+            {process.env.NEXT_PUBLIC_PRACTICE_NAME ?? 'Lara Kaplan'}, Registered Nurse and Midwife · Practice No. {process.env.NEXT_PUBLIC_PRACTICE_NUMBER ?? '0648949'} · {process.env.NEXT_PUBLIC_PRACTICE_PHONE ?? '082 412 9135'} · {process.env.NEXT_PUBLIC_PRACTICE_EMAIL ?? 'sisterlarak@outlook.com'}
           </Text>
         </View>
       </Page>

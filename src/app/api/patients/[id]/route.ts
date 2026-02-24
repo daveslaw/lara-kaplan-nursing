@@ -11,7 +11,10 @@ export async function GET(_req: NextRequest, { params }: { params: Promise<{ id:
     .eq('id', id)
     .single()
 
-  if (error) return NextResponse.json({ error: error.message }, { status: 404 })
+  if (error) {
+    const status = error.code === 'PGRST116' ? 404 : 500
+    return NextResponse.json({ error: error.message }, { status })
+  }
   return NextResponse.json({ patient: data })
 }
 
