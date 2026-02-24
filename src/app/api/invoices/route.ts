@@ -1,8 +1,8 @@
 import { NextRequest, NextResponse } from 'next/server'
-import { createServerClient } from '@/lib/supabase/server'
+import { createAdminClient } from '@/lib/supabase/admin'
 
 export async function GET(req: NextRequest) {
-  const supabase = createServerClient()
+  const supabase = createAdminClient()
   const { searchParams } = new URL(req.url)
   const patientId = searchParams.get('patient_id')
   const status = searchParams.get('status')
@@ -23,7 +23,7 @@ export async function GET(req: NextRequest) {
 }
 
 export async function POST(req: NextRequest) {
-  const supabase = createServerClient()
+  const supabase = createAdminClient()
   const body = await req.json()
   const { service_lines, vaccine_lines, ...invoiceData } = body
 

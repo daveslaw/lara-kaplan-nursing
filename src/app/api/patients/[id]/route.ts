@@ -1,8 +1,8 @@
 import { NextRequest, NextResponse } from 'next/server'
-import { createServerClient } from '@/lib/supabase/server'
+import { createAdminClient } from '@/lib/supabase/admin'
 
 export async function GET(_req: NextRequest, { params }: { params: Promise<{ id: string }> }) {
-  const supabase = createServerClient()
+  const supabase = createAdminClient()
   const { id } = await params
 
   const { data, error } = await supabase
@@ -16,7 +16,7 @@ export async function GET(_req: NextRequest, { params }: { params: Promise<{ id:
 }
 
 export async function PUT(req: NextRequest, { params }: { params: Promise<{ id: string }> }) {
-  const supabase = createServerClient()
+  const supabase = createAdminClient()
   const { id } = await params
   const body = await req.json()
 
@@ -32,7 +32,7 @@ export async function PUT(req: NextRequest, { params }: { params: Promise<{ id: 
 }
 
 export async function DELETE(_req: NextRequest, { params }: { params: Promise<{ id: string }> }) {
-  const supabase = createServerClient()
+  const supabase = createAdminClient()
   const { id } = await params
 
   const { error } = await supabase.from('patients').delete().eq('id', id)

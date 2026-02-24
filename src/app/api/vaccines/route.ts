@@ -1,8 +1,8 @@
 import { NextResponse } from 'next/server'
-import { createServerClient } from '@/lib/supabase/server'
+import { createAdminClient } from '@/lib/supabase/admin'
 
 export async function GET() {
-  const supabase = createServerClient()
+  const supabase = createAdminClient()
 
   const { data, error } = await supabase
     .from('vaccine_catalog')

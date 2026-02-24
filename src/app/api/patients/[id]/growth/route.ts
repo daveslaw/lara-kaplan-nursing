@@ -1,8 +1,8 @@
 import { NextRequest, NextResponse } from 'next/server'
-import { createServerClient } from '@/lib/supabase/server'
+import { createAdminClient } from '@/lib/supabase/admin'
 
 export async function GET(_req: NextRequest, { params }: { params: Promise<{ id: string }> }) {
-  const supabase = createServerClient()
+  const supabase = createAdminClient()
   const { id } = await params
 
   const { data, error } = await supabase
@@ -16,7 +16,7 @@ export async function GET(_req: NextRequest, { params }: { params: Promise<{ id:
 }
 
 export async function POST(req: NextRequest, { params }: { params: Promise<{ id: string }> }) {
-  const supabase = createServerClient()
+  const supabase = createAdminClient()
   const { id } = await params
   const body = await req.json()
 
@@ -31,7 +31,7 @@ export async function POST(req: NextRequest, { params }: { params: Promise<{ id:
 }
 
 export async function DELETE(req: NextRequest, { params }: { params: Promise<{ id: string }> }) {
-  const supabase = createServerClient()
+  const supabase = createAdminClient()
   await params
   const { searchParams } = new URL(req.url)
   const entryId = searchParams.get('entryId')

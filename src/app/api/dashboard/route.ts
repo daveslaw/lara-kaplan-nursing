@@ -1,9 +1,9 @@
 import { NextResponse } from 'next/server'
-import { createServerClient } from '@/lib/supabase/server'
+import { createAdminClient } from '@/lib/supabase/admin'
 import { startOfMonth } from 'date-fns'
 
 export async function GET() {
-  const supabase = createServerClient()
+  const supabase = createAdminClient()
   const monthStart = startOfMonth(new Date()).toISOString().split('T')[0]
 
   const [patients, pendingInvoices, paidThisMonth, recentPatients] = await Promise.all([
