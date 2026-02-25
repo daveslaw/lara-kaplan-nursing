@@ -1,5 +1,6 @@
 import { NextRequest, NextResponse } from 'next/server'
 import { createAdminClient } from '@/lib/supabase/admin'
+import { logAudit } from '@/lib/audit'
 
 export async function GET(_req: NextRequest, { params }: { params: Promise<{ id: string }> }) {
   const supabase = createAdminClient()
@@ -38,5 +39,10 @@ export async function PUT(req: NextRequest, { params }: { params: Promise<{ id: 
     .single()
 
   if (error) return NextResponse.json({ error: error.message }, { status: 500 })
+
+  await logAudit(supabase, 'UPDATE', 'invoices', id,
+    `${data.invoice_number} · ${data.patient_name}`,
+    body.status ? { status: body.status } : undefined)
+
   return NextResponse.json({ invoice: data })
 }

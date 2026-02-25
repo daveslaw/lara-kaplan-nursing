@@ -1,6 +1,7 @@
 import { NextRequest, NextResponse } from 'next/server'
 import { z } from 'zod'
 import { createAdminClient } from '@/lib/supabase/admin'
+import { logAudit } from '@/lib/audit'
 
 const CreateVaccinationSchema = z.object({
   vaccine_name: z.string().min(1, 'vaccine_name is required'),
@@ -38,12 +39,16 @@ export async function POST(req: NextRequest, { params }: { params: Promise<{ id:
     .single()
 
   if (error) return NextResponse.json({ error: error.message }, { status: 500 })
+
+  await logAudit(supabase, 'CREATE', 'vaccination_records', data.id,
+    `Patient ${id} · ${data.vaccine_name} · ${data.administered_date}`)
+
   return NextResponse.json({ record: data }, { status: 201 })
 }
 
 export async function DELETE(req: NextRequest, { params }: { params: Promise<{ id: string }> }) {
   const supabase = createAdminClient()
-  await params
+  const { id } = await params
   const { searchParams } = new URL(req.url)
   const recordId = searchParams.get('recordId')
 
@@ -51,5 +56,8 @@ export async function DELETE(req: NextRequest, { params }: { params: Promise<{ i
 
   const { error } = await supabase.from('vaccination_records').delete().eq('id', recordId)
   if (error) return NextResponse.json({ error: error.message }, { status: 500 })
+
+  await logAudit(supabase, 'DELETE', 'vaccination_records', recordId, `Patient ${id}`)
+
   return NextResponse.json({ success: true })
 }

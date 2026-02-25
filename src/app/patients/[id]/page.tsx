@@ -10,7 +10,7 @@ import { Button } from '@/components/ui/button'
 import { Badge } from '@/components/ui/badge'
 import { Tabs, TabsContent, TabsList, TabsTrigger } from '@/components/ui/tabs'
 import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card'
-import { ChevronLeft, Pencil, FileText, Baby, Trash2 } from 'lucide-react'
+import { ChevronLeft, Pencil, FileText, Baby, ArchiveX, ArchiveRestore } from 'lucide-react'
 import { formatDate, ageLabel, weightDisplay } from '@/lib/utils'
 import type { Patient } from '@/types'
 import { GrowthTab } from '@/components/growth/GrowthTab'
@@ -38,15 +38,32 @@ export default function PatientProfilePage({ params }: { params: Promise<{ id: s
 
   const patient = data?.patient
 
-  const handleDelete = async () => {
-    if (!confirm('Delete this patient and all their records? This cannot be undone.')) return
+  const handleArchive = async () => {
+    if (!confirm(
+      'Archive this patient? Their records will be retained for at least 6 years as required by HPCSA, then flagged for secure disposal.'
+    )) return
     const res = await fetch(`/api/patients/${id}`, { method: 'DELETE' })
     if (res.ok) {
-      toast.success('Patient deleted')
+      toast.success('Patient archived')
       queryClient.invalidateQueries({ queryKey: ['patients'] })
-      router.push('/patients')
+      queryClient.invalidateQueries({ queryKey: ['patient', id] })
     } else {
-      toast.error('Failed to delete patient')
+      toast.error('Failed to archive patient')
+    }
+  }
+
+  const handleRestore = async () => {
+    const res = await fetch(`/api/patients/${id}`, {
+      method: 'PUT',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify({ deleted_at: null, deletion_reason: null }),
+    })
+    if (res.ok) {
+      toast.success('Patient restored')
+      queryClient.invalidateQueries({ queryKey: ['patients'] })
+      queryClient.invalidateQueries({ queryKey: ['patient', id] })
+    } else {
+      toast.error('Failed to restore patient')
     }
   }
 
@@ -83,18 +100,37 @@ export default function PatientProfilePage({ params }: { params: Promise<{ id: s
             <Button variant="ghost" size="sm" asChild>
               <Link href="/patients"><ChevronLeft className="w-4 h-4 mr-1" />Back</Link>
             </Button>
-            <Button variant="outline" size="sm" asChild>
-              <Link href={`/patients/${id}/edit`}><Pencil className="w-3.5 h-3.5 mr-1" />Edit</Link>
-            </Button>
-            <Button size="sm" asChild style={{ background: '#0f4c5c' }}>
-              <Link href={`/invoices/new?patient=${id}`}><FileText className="w-3.5 h-3.5 mr-1" />Invoice</Link>
-            </Button>
-            <Button variant="ghost" size="sm" onClick={handleDelete} className="text-destructive hover:text-destructive">
-              <Trash2 className="w-4 h-4" />
-            </Button>
+            {!patient.deleted_at && (
+              <>
+                <Button variant="outline" size="sm" asChild>
+                  <Link href={`/patients/${id}/edit`}><Pencil className="w-3.5 h-3.5 mr-1" />Edit</Link>
+                </Button>
+                <Button size="sm" asChild style={{ background: '#0f4c5c' }}>
+                  <Link href={`/invoices/new?patient=${id}`}><FileText className="w-3.5 h-3.5 mr-1" />Invoice</Link>
+                </Button>
+                <Button variant="ghost" size="sm" onClick={handleArchive} className="text-destructive hover:text-destructive">
+                  <ArchiveX className="w-4 h-4" />
+                </Button>
+              </>
+            )}
+            {patient.deleted_at && (
+              <Button variant="outline" size="sm" onClick={handleRestore}>
+                <ArchiveRestore className="w-3.5 h-3.5 mr-1" />Restore
+              </Button>
+            )}
           </div>
         }
       />
+
+      {patient.deleted_at && (
+        <div className="rounded-lg border border-amber-200 bg-amber-50 px-4 py-3 text-sm text-amber-800 mb-4">
+          <strong>Archived</strong> on {formatDate(patient.deleted_at)}.
+          Records are retained for 6 years per HPCSA requirements.
+          {new Date(patient.deleted_at) < new Date(Date.now() - 6 * 365.25 * 24 * 60 * 60 * 1000) && (
+            <span className="ml-2 font-semibold text-red-700">Ready for secure disposal.</span>
+          )}
+        </div>
+      )}
 
       <Tabs defaultValue="overview" className="space-y-4">
         <TabsList>

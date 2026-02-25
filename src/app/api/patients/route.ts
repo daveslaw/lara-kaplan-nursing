@@ -1,6 +1,7 @@
 import { NextRequest, NextResponse } from 'next/server'
 import { z } from 'zod'
 import { createAdminClient } from '@/lib/supabase/admin'
+import { logAudit } from '@/lib/audit'
 
 const CreatePatientSchema = z.object({
   client_name: z.string().min(1, 'client_name is required'),
@@ -13,11 +14,19 @@ export async function GET(req: NextRequest) {
   const limit = parseInt(searchParams.get('limit') || '50')
   const offset = parseInt(searchParams.get('offset') || '0')
 
+  const archived = searchParams.get('archived') === 'true'
+
   let query = supabase
     .from('patients')
     .select('*', { count: 'exact' })
     .order('created_at', { ascending: false })
     .range(offset, offset + limit - 1)
+
+  if (archived) {
+    query = query.not('deleted_at', 'is', null)
+  } else {
+    query = query.is('deleted_at', null)
+  }
 
   if (search) {
     query = query.or(
@@ -47,5 +56,9 @@ export async function POST(req: NextRequest) {
     .single()
 
   if (error) return NextResponse.json({ error: error.message }, { status: 500 })
+
+  await logAudit(supabase, 'CREATE', 'patients', data.id,
+    [data.baby_name, data.client_name].filter(Boolean).join(' / '))
+
   return NextResponse.json({ patient: data }, { status: 201 })
 }

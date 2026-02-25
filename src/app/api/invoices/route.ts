@@ -1,6 +1,7 @@
 import { NextRequest, NextResponse } from 'next/server'
 import { z } from 'zod'
 import { createAdminClient } from '@/lib/supabase/admin'
+import { logAudit } from '@/lib/audit'
 
 const CreateInvoiceSchema = z.object({
   patient_id: z.string().uuid('patient_id must be a valid UUID'),
@@ -62,6 +63,9 @@ export async function POST(req: NextRequest) {
     )
     if (error) return NextResponse.json({ error: error.message }, { status: 500 })
   }
+
+  await logAudit(supabase, 'CREATE', 'invoices', invoice.id,
+    `${invoice.invoice_number} · ${invoice.patient_name}`)
 
   return NextResponse.json({ invoice }, { status: 201 })
 }

@@ -30,6 +30,8 @@ export interface Patient {
   consent_name: string | null
   created_at: string
   updated_at: string
+  deleted_at: string | null
+  deletion_reason: string | null
 }
 
 export interface GrowthEntry {
@@ -222,6 +224,16 @@ export type InvoiceVaccineLineForm = {
   unit_price_cents: number
   quantity: number
   vaccination_record_id?: string
+}
+
+export interface AuditLog {
+  id: string
+  action: 'CREATE' | 'UPDATE' | 'DELETE' | 'RESTORE'
+  table_name: string
+  record_id: string
+  record_label: string | null
+  changes: Record<string, unknown> | null
+  performed_at: string
 }
 
 // ============================================================
