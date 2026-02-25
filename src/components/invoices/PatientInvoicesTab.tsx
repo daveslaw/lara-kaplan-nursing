@@ -27,7 +27,7 @@ export function PatientInvoicesTab({ patientId }: { patientId: string }) {
     <div className="space-y-4">
       <div className="flex justify-between items-center">
         <h3 className="text-sm font-semibold">Invoices</h3>
-        <Button asChild size="sm" style={{ background: '#0f4c5c' }}>
+        <Button asChild size="sm">
           <Link href={`/invoices/new?patient=${patientId}`}>
             <Plus className="w-4 h-4 mr-1" /> New Invoice
           </Link>

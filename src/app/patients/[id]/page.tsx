@@ -105,7 +105,7 @@ export default function PatientProfilePage({ params }: { params: Promise<{ id: s
                 <Button variant="outline" size="sm" asChild>
                   <Link href={`/patients/${id}/edit`}><Pencil className="w-3.5 h-3.5 mr-1" />Edit</Link>
                 </Button>
-                <Button size="sm" asChild style={{ background: '#0f4c5c' }}>
+                <Button size="sm" asChild>
                   <Link href={`/invoices/new?patient=${id}`}><FileText className="w-3.5 h-3.5 mr-1" />Invoice</Link>
                 </Button>
                 <Button variant="ghost" size="sm" onClick={handleArchive} className="text-destructive hover:text-destructive">

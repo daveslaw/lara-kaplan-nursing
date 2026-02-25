@@ -394,7 +394,7 @@ export function InvoiceBuilder({ preselectedPatientId }: InvoiceBuilderProps) {
           {invoiceDataForPDF && (serviceLines.length > 0 || vaccineLines.length > 0) && (
             <PDFDownloadButton invoiceData={invoiceDataForPDF} />
           )}
-          <Button onClick={handleSave} disabled={saving} style={{ background: '#0f4c5c' }}>
+          <Button onClick={handleSave} disabled={saving}>
             {saving ? 'Saving…' : 'Save Invoice'}
           </Button>
         </div>

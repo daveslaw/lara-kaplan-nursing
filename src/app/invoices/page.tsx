@@ -60,7 +60,7 @@ export default function InvoicesPage() {
                 <SelectItem value="paid">Paid</SelectItem>
               </SelectContent>
             </Select>
-            <Button asChild size="sm" style={{ background: '#0f4c5c' }}>
+            <Button asChild size="sm">
               <Link href="/invoices/new"><Plus className="w-4 h-4 mr-1" />New Invoice</Link>
             </Button>
           </div>
@@ -76,7 +76,7 @@ export default function InvoicesPage() {
           <CardContent className="py-12 text-center">
             <FileText className="w-10 h-10 text-muted-foreground mx-auto mb-3" />
             <p className="text-sm text-muted-foreground">No invoices found.</p>
-            <Button asChild className="mt-4" style={{ background: '#0f4c5c' }}>
+            <Button asChild className="mt-4">
               <Link href="/invoices/new">Create First Invoice</Link>
             </Button>
           </CardContent>

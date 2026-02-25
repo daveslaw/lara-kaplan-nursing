@@ -1,0 +1,10 @@
+/* ─── Brand colour utilities ──────────────────────────────────────────────────
+   Centralises hardcoded colour values so they are defined once and reference
+   the CSS custom properties already declared in globals.css.
+   ──────────────────────────────────────────────────────────────────────────── */
+
+/* Avatar circle used in patient list rows */
+.patient-avatar {
+  background-color: var(--color-teal-100); /* #d0eaed */
+  color: var(--color-teal-900);            /* #0f4c5c */
+}

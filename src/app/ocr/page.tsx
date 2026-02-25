@@ -243,7 +243,7 @@ export default function OCRPage() {
           />
 
           {file && !hasResults && (
-            <Button className="w-full" style={{ background: '#0f4c5c' }} onClick={handleScan} disabled={scanning}>
+            <Button className="w-full" onClick={handleScan} disabled={scanning}>
               {scanning
                 ? <><Loader2 className="w-4 h-4 mr-2 animate-spin" />Scanning…</>
                 : <><ScanLine className="w-4 h-4 mr-2" />Scan with OCR</>
@@ -269,7 +269,7 @@ export default function OCRPage() {
           <div className="space-y-5">
             {/* Action bar */}
             <div className="flex items-center gap-3 flex-wrap">
-              <Button style={{ background: '#0f4c5c' }} onClick={handleSaveAll} disabled={saving}>
+              <Button onClick={handleSaveAll} disabled={saving}>
                 {saving ? <><Loader2 className="w-4 h-4 mr-2 animate-spin" />Saving…</> : 'Save as New Patient'}
               </Button>
               <Button variant="outline" onClick={handleScan} disabled={scanning}>

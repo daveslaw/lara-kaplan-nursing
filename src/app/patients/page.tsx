@@ -110,8 +110,7 @@ export default function PatientsPage() {
                   >
                     <div className="flex items-center gap-3">
                       <div
-                        className="w-9 h-9 rounded-full flex items-center justify-center flex-shrink-0"
-                        style={{ background: '#d0eaed', color: '#0f4c5c' }}
+                        className="patient-avatar w-9 h-9 rounded-full flex items-center justify-center flex-shrink-0"
                       >
                         <Baby className="w-4 h-4" />
                       </div>

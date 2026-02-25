@@ -122,7 +122,7 @@ export default function InvoiceDetailPage({ params }: { params: Promise<{ id: st
           </CardContent></Card>
           <Card><CardContent className="p-4">
             <p className="text-xs text-muted-foreground">Total Due</p>
-            <p className="text-lg font-bold mt-0.5" style={{ color: '#0f4c5c' }}>{formatZAR(invoice.grand_total_cents)}</p>
+            <p className="text-lg font-bold mt-0.5 text-teal-900">{formatZAR(invoice.grand_total_cents)}</p>
           </CardContent></Card>
         </div>
 
@@ -199,7 +199,7 @@ export default function InvoiceDetailPage({ params }: { params: Promise<{ id: st
               <div className="flex justify-between"><span className="text-muted-foreground">Vaccines</span><span>{formatZAR(invoice.vaccines_total_cents)}</span></div>
             )}
             <div className="border-t border-border pt-1.5 flex justify-between font-bold">
-              <span>Total Due</span><span style={{ color: '#0f4c5c' }}>{formatZAR(invoice.grand_total_cents)}</span>
+              <span>Total Due</span><span className="text-teal-900">{formatZAR(invoice.grand_total_cents)}</span>
             </div>
             <p className="text-xs text-muted-foreground pt-1">
               FNB · Lara Kaplan Nursing · 62744358369 · Branch 250655
